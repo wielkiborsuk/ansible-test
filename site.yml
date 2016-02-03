@@ -1,0 +1,12 @@
+---
+- name: Prepare basic env for symfony2 app on all nodes
+  hosts: all
+  remote_user: borsuk
+  sudo: yes
+  vars_files:
+    - variables.yml
+  roles:
+    - tools
+    #- dotfiles
+    #- apache
+
