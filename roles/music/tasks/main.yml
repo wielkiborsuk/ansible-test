@@ -5,7 +5,6 @@
 - name: Install common tools
   apt: name={{ item }} state=latest
   with_items:
-    - git
-    - vim
-    - curl
-    - htop
+    - cmus
+    - pavucontrol
+    - blueman

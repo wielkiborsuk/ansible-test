@@ -5,7 +5,10 @@
 - name: Install common tools
   apt: name={{ item }} state=latest
   with_items:
-    - git
-    - vim
-    - curl
-    - htop
+    - i3
+    - conky
+    - dmenu
+    - dunst
+    - feh
+    - scrot
+    - suckless-tools

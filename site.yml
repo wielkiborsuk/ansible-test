@@ -6,7 +6,15 @@
   vars_files:
     - variables.yml
   roles:
-    - tools
-    #- dotfiles
-    #- apache
+    - system
+    - aria
+    - shell
+    - editor
+    - ranger
+    - general-tools
+    - i3wm
+    - browser
+    - music
+    - rxvt
+    - video
 

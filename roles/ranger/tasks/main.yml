@@ -5,7 +5,11 @@
 - name: Install common tools
   apt: name={{ item }} state=latest
   with_items:
-    - git
-    - vim
-    - curl
-    - htop
+    - ranger
+    - atool
+    - highlight
+    - mediainfo
+    - rar
+    - unrar
+    - p7zip
+    - w3m

@@ -1,0 +1,17 @@
+---
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Install common tools
+  apt: name={{ item }} state=latest
+  with_items:
+    - zsh
+    - tmux
+    - screen
+    - caca-utils
+    - cowsay
+    - sc
+    - weechat
+    - wicd-curses
+    - figlet
+    - tidy

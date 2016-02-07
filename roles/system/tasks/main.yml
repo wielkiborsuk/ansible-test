@@ -1,0 +1,30 @@
+---
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Install system tools
+  apt: name={{ item }} state=latest
+  with_items:
+    - aptitude
+    - gdebi
+    - ansible
+    - htop
+
+- name: Install build tools
+  apt: name={{ item }} state=latest
+  with_items:
+    - build-essential
+    - automake
+    - autoconf
+    - bison
+    - cmake
+
+- name: Install admin tools
+  apt: name={{ item }} state=latest
+  with_items:
+    - ack-grep
+    - silversearcher-ag
+    - ccze
+    - git
+    - git-flow
+    - hdup

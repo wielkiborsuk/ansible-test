@@ -5,7 +5,8 @@
 - name: Install common tools
   apt: name={{ item }} state=latest
   with_items:
-    - git
-    - vim
-    - curl
-    - htop
+    - chromium-browser
+    - chromium-codecs-ffmpeg-extra
+    - flashplugin-installer
+    - dillo
+    - links
