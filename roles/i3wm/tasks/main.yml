@@ -7,7 +7,6 @@
   with_items:
     - i3
     - conky
-    - dmenu
     - dunst
     - feh
     - scrot
