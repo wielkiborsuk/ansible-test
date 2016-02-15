@@ -1,0 +1,24 @@
+---
+- name: Ensure the .ssh directory exists
+  sudo: no
+  file: path=~/.ssh state=directory
+
+- name: Add ssh config with your keys to access all repositories
+  sudo: no
+  copy: src=~/.ssh/id_rsa.pub dest=~/.ssh/
+
+- name: Add ssh config with your keys to access all repositories
+  sudo: no
+  copy: src=~/.ssh/id_rsa dest=~/.ssh/
+
+- name: Ensure the workspace directory exists
+  sudo: no
+  file: path=~/workspace state=directory
+
+- name: Grab dotfiles git repo - this is a crucial step will be required by others
+  sudo: no
+  git:
+    repo: "git@bitbucket.com:wielkiborsuk/dotfiles.git"
+    dest: "~/workspace/dotfiles"
+    accept_hostkey: yes
+    update: yes
