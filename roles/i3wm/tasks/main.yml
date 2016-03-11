@@ -1,4 +1,13 @@
 ---
+- name: add i3 repository
+  apt_repository: repo='deb http://debian.sur5r.net/i3/ wily universe' state=present
+
+- name: Update apt
+  apt: update_cache=yes cache_valid_time=86400
+
+- name: add keyring package
+  command: apt-get --allow-unauthenticated install sur5r-keyring
+
 - name: Update apt
   apt: update_cache=yes
 

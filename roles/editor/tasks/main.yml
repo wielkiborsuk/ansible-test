@@ -1,9 +1,18 @@
 ---
 - name: Update apt
-  apt: update_cache=yes
+  apt: update_cache=yes cache_valid_time=86400
 
-- name: Install common tools
+- name: Install uber text editors
   apt: name={{ item }} state=latest
   with_items:
     - vim-gtk
     - emacs24
+
+- name: run vim vundle install
+  command: vim +BundleInstall +qa
+
+- name: compile YouCompleteMe plugin
+  command: ./install.py
+  args:
+    chdir: ~/.vim/bundle/YouCompleteMe/
+    creates: ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so

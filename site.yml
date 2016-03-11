@@ -19,3 +19,5 @@
     - rxvt
     - video
 
+#- name: restart machine
+  #command: shutdown -r now "Ansible updates triggered"

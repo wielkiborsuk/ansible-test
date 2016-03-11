@@ -1,8 +1,8 @@
 ---
 - name: Update apt
-  apt: update_cache=yes
+  apt: update_cache=yes cache_valid_time=86400
 
-- name: Install common tools
+- name: Install web browser starting pack
   apt: name={{ item }} state=latest
   with_items:
     - chromium-browser
@@ -10,3 +10,7 @@
     - flashplugin-installer
     - dillo
     - links
+
+- name: Create chromium symlink for script usage
+  sudo: no
+  file: src=/usr/bin/chromium-browser dest=~/bin/chromium state=link force=yes
