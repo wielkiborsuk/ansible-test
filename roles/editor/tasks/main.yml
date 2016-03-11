@@ -9,9 +9,11 @@
     - emacs24
 
 - name: run vim vundle install
+  sudo: no
   command: vim +BundleInstall +qa
 
 - name: compile YouCompleteMe plugin
+  sudo: no
   command: ./install.py
   args:
     chdir: ~/.vim/bundle/YouCompleteMe/
