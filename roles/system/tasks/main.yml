@@ -30,11 +30,6 @@
   apt: name={{ item }} state=latest
   with_items:
     - python-pycurl
-    - python3-pycurl
-    - python-crypto
-    - python3-crypto
-    - python-dev
-    - python3-dev
 
 - name: Update apt
   apt: update_cache=yes upgrade=yes cache_valid_time=86400

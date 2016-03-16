@@ -1,0 +1,19 @@
+--- 
+- name: add oracle java8 repository
+  apt_repository: repo='ppa:webupd8team/java' state=present
+
+- name: Update apt
+  apt: update_cache=yes
+
+- name: preconfigure license agreement skip
+  command: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+  command: echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
+
+- name: Install java packages
+  apt: name={{ item }} state=latest
+  with_items:
+    - oracle-java8-installer
+    - oracle-java8-set-default
+    - maven
+    - postgresql
+    - pgadmin3

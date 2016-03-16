@@ -5,7 +5,6 @@
 - name: Install common tools
   apt: name={{ item }} state=latest
   with_items:
-    - ranger
     - atool
     - highlight
     - mediainfo
@@ -13,3 +12,19 @@
     - unrar
     - p7zip
     - w3m
+
+- name: ensure that ~/expr exists
+  sudo: no
+  file: path=~/expr state=directory
+
+- name: clone ranger repo
+  sudo: no
+  git:
+    repo: 'git://git.savannah.nongnu.org/ranger.git'
+    dest: '~/expr/ranger'
+    accept_hostkey: yes
+    update: yes
+
+- name: link ranger executable
+  sudo: no
+  file: src=~/expr/ranger/ranger.py dest=~/bin/ranger state=link force=yes

@@ -10,7 +10,7 @@
 
 - name: run vim vundle install
   sudo: no
-  command: vim +BundleInstall +qa
+  command: vim +'silent! BundleInstall' +qa
 
 - name: compile YouCompleteMe plugin
   sudo: no

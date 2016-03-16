@@ -1,5 +1,5 @@
 ---
-- name: Prepare basic env for symfony2 app on all nodes
+- name: One shot developer system setup
   hosts: all
   remote_user: borsuk
   sudo: yes
@@ -10,14 +10,19 @@
     - dotfiles
     - aria
     - shell
+    - python
     - editor
     - ranger
     - general-tools
     - i3wm
     - browser
+    - java
+    - virtuals
+    - remote
     - music
     - rxvt
     - video
+    - web
 
 #- name: restart machine
   #command: shutdown -r now "Ansible updates triggered"

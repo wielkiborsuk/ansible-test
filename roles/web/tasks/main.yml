@@ -1,0 +1,23 @@
+--- 
+- name: add new key to apt for nodejs
+  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+
+- name: add new nodejs repository
+  apt_repository: repo='deb https://deb.nodesource.com/node_4.x precise main' state=present
+
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Install nodejs
+  apt: name={{ item }} state=latest
+  with_items:
+    - nodejs
+
+- name: install npm tools common for development process
+  npm: name={{ item }} global=yes
+  with_items:
+    - bower
+    - gulp
+    - forever
+    - yo
+    - git-run
