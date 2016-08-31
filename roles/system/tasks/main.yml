@@ -4,8 +4,10 @@
   with_items:
     - aptitude
     - gdebi
-    - ansible
     - htop
+
+- name: add ansible repo
+  apt_repository: repo='ppa:ansible/ansible' state=present
 
 - name: Install build tools
   apt: name={{ item }} state=latest
@@ -15,6 +17,7 @@
     - autoconf
     - bison
     - cmake
+    - ansible
 
 - name: Install admin tools
   apt: name={{ item }} state=latest

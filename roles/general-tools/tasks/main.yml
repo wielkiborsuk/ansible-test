@@ -14,3 +14,5 @@
     - wvdial
     - xdotool
     - xpad
+    - wget
+    - curl

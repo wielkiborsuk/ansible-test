@@ -1,4 +1,7 @@
 ---
+- name: Install stow
+  apt: name=stow state=latest
+
 - name: Ensure the .ssh, workspace, etc. directories exists
   sudo: no
   file: path={{item.path}} state=directory
