@@ -14,5 +14,5 @@
     - python3-pip
     - ipython
     - dreampie
-    - bpython-urwid
+    - python-urwid
     - cython
