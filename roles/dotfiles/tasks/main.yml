@@ -13,7 +13,7 @@
 
 - name: Add ssh config with your keys to access all repositories
   sudo: no
-  copy: src={{item.src}} dest=~/.ssh/
+  copy: src={{item.src}} dest=~/.ssh/ mode=0600
   with_items:
     - { src: '~/.ssh/id_rsa.pub'}
     - { src: '~/.ssh/id_rsa'}
@@ -22,44 +22,29 @@
   sudo: no
   git:
     repo: "git@bitbucket.com:wielkiborsuk/dotfiles.git"
-    dest: "~/workspace/dotfiles"
+    dest: "~/.dotfiles"
     accept_hostkey: yes
     update: yes
 
-- name: link config files
-  sudo: no
-  file: src=~/workspace/dotfiles/{{item.src}} dest=~/{{item.dest}} state=link force=yes
-  with_items:
-    - { src: 'dunst/HOME..config/dunst', dest: '.config/dunst'}
-    - { src: 'git/HOME..gitconfig', dest: '.gitconfig'}
-    - { src: 'git/HOME..gitignore', dest: '.gitignore'}
-    - { src: 'i3/HOME..config/i3status', dest: '.config/i3status'}
-    - { src: 'i3/HOME..i3', dest: '.i3'}
-    - { src: 'i3/HOME..tmux.conf', dest: '.tmux.conf'}
-    - { src: 'ranger/HOME..config/ranger', dest: '.config/ranger'}
-    - { src: 'rxvt/HOME..Xdefaults', dest: '.Xdefaults'}
-    - { src: 'zsh', dest: '.zsh'}
-    - { src: 'vundle-vim/HOME..vimrc', dest: '.vimrc'}
-    - { src: 'vundle-vim/HOME..fonts/terminus', dest: '.fonts/terminus'}
+- name: remove .Xdefaults to allow rxvt stowing
+  file: path=/home/borsuk/.Xdefaults state=absent
 
 - name: link config files
   sudo: no
-  file: src=~/workspace/dotfiles/i3/HOME.bin/{{item.src}} dest=~/bin/{{item.src}} state=link force=yes
+  shell: stow -R {{ item }}
+  args:
+    chdir: ~/.dotfiles
   with_items:
-    - { src: 'cmus_status' }
-    - { src: 'console_setup' }
-    - { src: 'crestore' }
-    - { src: 'i3conky' }
-    - { src: 'i3exit' }
-    - { src: 'i3lock' }
-    - { src: 'trestore' }
-
-- name: additional zsh link
-  sudo: no
-  file: src=~/.zsh/zshrc dest=~/.zshrc state=link force=yes
+    - stow
+    - dunst
+    - git
+    - i3
+    - ranger
+    - rxvt
+    - vundle-vim
+    - zsh
 
 - name: enable bitmap fonts
-  sudo: yes
   file: path=/etc/fonts/conf.d/70-no-bitmaps.conf state=absent
 
 - name: Grab smalls git repo - contains commands used by desktop setup
@@ -72,17 +57,13 @@
 
 - name: link commands from smalls
   sudo: no
-  file: src=~/workspace/smalls/{{item.src}} dest=~/bin/{{item.name}} state=link force=yes
+  shell: stow -R -t ~/ {{ item }}
+  args:
+    chdir: ~/workspace/smalls
   with_items:
-    - { src: 'album_converter/album_converter.py', name: 'album_converter.py' }
-    - { src: 'gmailcheck/checker.py', name: 'checker.py' }
-    - { src: 'gmailcheck/passstore.py', name: 'passstore.py' }
-    - { src: 'pomodoro/pomodoro', name: 'pomodoro' }
-    - { src: 'youtube_ripper/youtube_ripper.py', name: 'youtube_ripper.py' }
-
-- name: link pomodoro audio file
-  sudo: no
-  file: src=~/workspace/smalls/pomodoro/ring.mp3 dest=~/.config/ring.mp3 state=link force=yes
+    - album_converter
+    - gmailcheck
+    - pomodoro
 
       #append to the end of sudoers file
 #ALL ALL=(root) NOPASSWD: /sbin/poweroff
