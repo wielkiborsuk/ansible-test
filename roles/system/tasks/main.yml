@@ -18,6 +18,10 @@
     - bison
     - cmake
     - ansible
+    - curl
+
+- name: Add git-lfs repo
+  shell: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 
 - name: Install admin tools
   apt: name={{ item }} state=latest
@@ -27,7 +31,12 @@
     - ccze
     - git
     - git-flow
+    - git-lfs
     - hdup
+
+- name: Activate git-lfs extension
+  sudo: no
+  shell: git lfs install
 
 - name: Install ansible preconditions
   apt: name={{ item }} state=latest
