@@ -28,6 +28,7 @@
 
 - name: remove .Xdefaults to allow rxvt stowing
   file: path=/home/borsuk/.Xdefaults state=absent
+  file: path=/home/borsuk/.gitconfig state=absent
 
 - name: link config files
   sudo: no
