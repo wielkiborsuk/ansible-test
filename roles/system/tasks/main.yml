@@ -35,7 +35,7 @@
     - hdup
 
 - name: Activate git-lfs extension
-  sudo: no
+  become: no
   shell: git lfs install
 
 - name: Install ansible preconditions

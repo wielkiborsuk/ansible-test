@@ -8,14 +8,14 @@
     - aria2
 
 - name: Ensure expr directory in homedir
-  sudo: no
+  become: no
   file: path={{item.path}} state=directory
   with_items:
     - { path: '~/expr' }
     - { path: '~/bin' }
 
 - name: Checkout the diana project
-  sudo: no
+  become: no
   git:
     repo: "https://github.com/baskerville/diana.git"
     dest: "~/expr/diana"
@@ -23,7 +23,7 @@
     update: yes
 
 - name: Link diana binaries
-  sudo: no
+  become: no
   file: src=~/expr/diana/{{item.name}} dest=~/bin/{{item.name}} state=link force=yes
   with_items:
     - { name: 'diana' }

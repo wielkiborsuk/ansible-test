@@ -3,7 +3,7 @@
   apt: name=stow state=latest
 
 - name: Ensure the .ssh, workspace, etc. directories exists
-  sudo: no
+  become: no
   file: path={{item.path}} state=directory
   with_items:
     - { path: '~/.ssh' }
@@ -12,26 +12,28 @@
     - { path: '~/bin' }
 
 - name: Add ssh config with your keys to access all repositories
-  sudo: no
+  become: no
   copy: src={{item.src}} dest=~/.ssh/ mode=0600
   with_items:
     - { src: '~/.ssh/id_rsa.pub'}
     - { src: '~/.ssh/id_rsa'}
 
 - name: Grab dotfiles git repo - this is a crucial step will be required by others
-  sudo: no
+  become: no
   git:
     repo: "git@bitbucket.com:wielkiborsuk/dotfiles.git"
     dest: "~/.dotfiles"
     accept_hostkey: yes
     update: yes
 
-- name: remove .Xdefaults to allow rxvt stowing
-  file: path=/home/borsuk/.Xdefaults state=absent
+- name: remove .gitconfig to allow rxvt stowing
   file: path=/home/borsuk/.gitconfig state=absent
 
+- name: remove .Xdefaults to allow rxvt stowing
+  file: path=/home/borsuk/.Xdefaults state=absent
+
 - name: link config files
-  sudo: no
+  become: no
   shell: stow -R {{ item }}
   args:
     chdir: ~/.dotfiles
@@ -49,7 +51,7 @@
   file: path=/etc/fonts/conf.d/70-no-bitmaps.conf state=absent
 
 - name: Grab smalls git repo - contains commands used by desktop setup
-  sudo: no
+  become: no
   git:
     repo: "git@bitbucket.com:wielkiborsuk/smalls.git"
     dest: "~/workspace/smalls"
@@ -57,7 +59,7 @@
     update: yes
 
 - name: link commands from smalls
-  sudo: no
+  become: no
   shell: stow -R -t ~/ {{ item }}
   args:
     chdir: ~/workspace/smalls

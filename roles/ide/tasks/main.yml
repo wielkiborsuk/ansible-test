@@ -1,19 +1,19 @@
 ---
 - name: Download intellij
-  sudo: no
+  become: no
   get_url:
     url=https://download-cf.jetbrains.com/idea/ideaIC-2016.2.2.tar.gz
     dest=~/expr/ideaIC-2016.2.2.tar.gz
     validate_certs=no
 
 - name: Unzip the thing
-  sudo: no
+  become: no
   unarchive: src=~/expr/ideaIC-2016.2.2.tar.gz dest=~/expr remote_src=yes copy=no
 
 - name: rename
-  sudo: no
+  become: no
   command: mv ~/expr/idea-IC-162.1628.40 ~/expr/idea16
 
 - name: Link idea
-  sudo: no
+  become: no
   file: src=~/expr/idea16/bin/idea.sh dest=~/bin/idea state=link force=yes
