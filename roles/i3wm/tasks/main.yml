@@ -1,15 +1,15 @@
 ---
+- name: add i3 repo keyring
+  command: /usr/lib/apt/apt-helper download-file http://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2017.01.02_all.deb keyring.deb SHA256:4c3c6685b1181d83efe3a479c5ae38a2a44e23add55e16a328b8c8560bf05e5f
+
+- name: add keyring package
+  command: dpkg -i ./keyring.deb
+
 - name: add i3 repository
-  apt_repository: repo='deb http://debian.sur5r.net/i3/ wily universe' state=present
+  apt_repository: repo='deb http://debian.sur5r.net/i3/ artful universe' state=present
 
 - name: Update apt
   apt: update_cache=yes cache_valid_time=86400
-
-- name: add keyring package
-  command: apt-get --allow-unauthenticated install sur5r-keyring
-
-- name: Update apt
-  apt: update_cache=yes
 
 - name: Install common tools
   apt: name={{ item }} state=latest
