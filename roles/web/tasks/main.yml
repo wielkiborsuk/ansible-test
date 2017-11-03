@@ -3,7 +3,7 @@
   apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
 
 - name: add new nodejs repository
-  apt_repository: repo='deb https://deb.nodesource.com/node_4.x precise main' state=present
+  apt_repository: repo='deb https://deb.nodesource.com/setup_8.x artful main' state=present
 
 - name: Update apt
   apt: update_cache=yes
