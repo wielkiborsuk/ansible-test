@@ -18,3 +18,9 @@
 
 - name: choose shell
   user: name=borsuk shell=/usr/bin/zsh
+
+- name: setup antibody
+  command: curl -sL https://git.io/antibody | bash -s
+
+- name: save antibody config
+  command: echo 'source <(antibody init)' >> ~/a.zshrc
