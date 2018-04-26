@@ -6,7 +6,6 @@
   apt: name={{ item }} state=latest
   with_items:
     - vim-gtk
-    - emacs24
 
 - name: run vim vundle install
   become: no

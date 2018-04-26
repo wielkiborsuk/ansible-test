@@ -20,13 +20,12 @@
     - ansible
     - curl
 
-- name: Add git-lfs repo
-  shell: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+#- name: Add git-lfs repo
+  #shell: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 
 - name: Install admin tools
   apt: name={{ item }} state=latest
   with_items:
-    - ack-grep
     - silversearcher-ag
     - ccze
     - git

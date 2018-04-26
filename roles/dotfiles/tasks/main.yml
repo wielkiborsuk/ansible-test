@@ -25,6 +25,7 @@
     dest: "~/.dotfiles"
     accept_hostkey: yes
     update: yes
+    force: yes
 
 - name: remove .gitconfig to allow rxvt stowing
   file: path=/home/borsuk/.gitconfig state=absent
