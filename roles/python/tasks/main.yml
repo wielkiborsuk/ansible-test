@@ -13,6 +13,4 @@
     - python3-crypto
     - python3-pip
     - ipython
-    - dreampie
-    - python-urwid
     - cython

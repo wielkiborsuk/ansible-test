@@ -1,6 +1,6 @@
 ---
 - name: add partner repo
-  apt_repository: repo='deb http://archive.canonical.com/ubuntu xenial partner' state=present
+  apt_repository: repo='deb http://archive.canonical.com/ubuntu bionic partner' state=present
 
 - name: Update apt
   apt: update_cache=yes cache_valid_time=86400

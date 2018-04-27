@@ -1,9 +1,9 @@
---- 
+---
 - name: add new key to apt for nodejs
   apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
 
 - name: add new nodejs repository
-  apt_repository: repo='deb https://deb.nodesource.com/setup_8.x artful main' state=present
+  apt_repository: repo='deb https://deb.nodesource.com/node_8.x bionic main' state=present
 
 - name: Update apt
   apt: update_cache=yes
@@ -16,9 +16,11 @@
 - name: install npm tools common for development process
   npm: name={{ item }} global=yes
   become: true
+  become_method: su
   with_items:
     - bower
     - gulp
     - forever
-    - yo
     - git-run
+    - yarn
+    - firebase-tools
