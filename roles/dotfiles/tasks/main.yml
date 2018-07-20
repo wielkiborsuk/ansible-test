@@ -11,6 +11,18 @@
     - { path: '~/.fonts' }
     - { path: '~/bin' }
 
+- name: Ensure the default directories do not exist
+  become: no
+  file: path={{item.path}} state=absent
+  with_items:
+    - { path: '~/Desktop' }
+    - { path: '~/Documents' }
+    - { path: '~/Music' }
+    - { path: '~/Pictures' }
+    - { path: '~/Public' }
+    - { path: '~/Templates' }
+    - { path: '~/Videos' }
+
 - name: Add ssh config with your keys to access all repositories
   become: no
   copy: src={{item.src}} dest=~/.ssh/ mode=0600

@@ -16,5 +16,8 @@
     - figlet
     - tidy
 
+- name: install antibody for zsh
+  shell: curl -sL git.io/antibody | sh -s
+
 - name: choose shell
   user: name=borsuk shell=/usr/bin/zsh
