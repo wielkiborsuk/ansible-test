@@ -59,6 +59,9 @@
     - rxvt
     - vundle-vim
     - zsh
+    - cmus
+    - smalls
+    - weechat
 
 - name: enable bitmap fonts
   file: path=/etc/fonts/conf.d/70-no-bitmaps.conf state=absent
@@ -80,6 +83,7 @@
     - album_converter
     - gmailcheck
     - pomodoro
+    - cmus_resume
 
       #append to the end of sudoers file
 #ALL ALL=(root) NOPASSWD: /sbin/poweroff

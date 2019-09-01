@@ -6,9 +6,6 @@
     - gdebi
     - htop
 
-- name: add ansible repo
-  apt_repository: repo='ppa:ansible/ansible' state=present
-
 - name: Install build tools
   apt: name={{ item }} state=latest
   with_items:
@@ -17,7 +14,6 @@
     - autoconf
     - bison
     - cmake
-    - ansible
     - curl
 
 #- name: Add git-lfs repo
@@ -31,7 +27,6 @@
     - git
     - git-flow
     - git-lfs
-    - hdup
 
 - name: Activate git-lfs extension
   become: no
