@@ -13,6 +13,7 @@
       - unrar
       - p7zip
       - w3m
+      - zathura
 
 - name: ensure that ~/expr exists
   become: no
