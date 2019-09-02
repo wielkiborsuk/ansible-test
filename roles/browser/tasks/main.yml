@@ -6,13 +6,14 @@
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install web browser starting pack
-  apt: name={{ item }} state=latest
-  with_items:
-    - chromium-browser
-    - chromium-codecs-ffmpeg-extra
-    - adobe-flashplugin
-    - dillo
-    - links
+  apt:
+    state: latest
+    name:
+      - chromium-browser
+      - chromium-codecs-ffmpeg-extra
+      - adobe-flashplugin
+      - dillo
+      - links
 
 - name: Create chromium symlink for script usage
   become: no

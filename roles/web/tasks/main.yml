@@ -3,23 +3,26 @@
   apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
 
 - name: add new nodejs repository
-  apt_repository: repo='deb https://deb.nodesource.com/node_8.x bionic main' state=present
+  apt_repository: repo='deb https://deb.nodesource.com/node_12.x bionic main' state=present
 
 - name: Update apt
   apt: update_cache=yes
 
 - name: Install nodejs
-  apt: name={{ item }} state=latest
-  with_items:
-    - nodejs
+  apt:
+    state: latest
+    name:
+      - nodejs
+
+- name: configure npm to use local directory for global installs
+  become: no
+  shell: npm config set prefix ~/.local
 
 - name: install npm tools common for development process
+  become: no
   npm: name={{ item }} global=yes
-  become: true
-  become_method: su
   with_items:
     - bower
-    - gulp
     - forever
     - git-run
     - yarn

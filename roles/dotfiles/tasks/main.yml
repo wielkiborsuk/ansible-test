@@ -39,11 +39,17 @@
     update: yes
     force: yes
 
-- name: remove .gitconfig to allow rxvt stowing
-  file: path=/home/borsuk/.gitconfig state=absent
+- name: remove .gitconfig to allow git stowing
+  become: no
+  file:
+    path: '~/.gitconfig'
+    state: absent
 
 - name: remove .Xdefaults to allow rxvt stowing
-  file: path=/home/borsuk/.Xdefaults state=absent
+  become: no
+  file:
+    path: '~/.Xdefaults'
+    state: absent
 
 - name: link config files
   become: no

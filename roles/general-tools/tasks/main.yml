@@ -3,18 +3,19 @@
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install common tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - pass
-    - gnupg2
-    - gnupg-agent
-    - redshift
-    - udevil
-    - wakeonlan
-    - wvdial
-    - xdotool
-    - xpad
-    - wget
+  apt:
+    state: latest
+    name:
+      - pass
+      - gnupg2
+      - gnupg-agent
+      - redshift
+      - udevil
+      - wakeonlan
+      - wvdial
+      - xdotool
+      - xpad
+      - wget
 
 - name: prepare dir for screenkey
   become: no

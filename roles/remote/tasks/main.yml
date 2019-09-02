@@ -1,12 +1,12 @@
---- 
+---
 - name: Update apt
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install remote access tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - x11vnc
-    - xvnc4viewer
-    - curlftpfs
-    - sshfs
-    #- sstp-client
+  apt:
+    state: latest
+    name:
+      - x11vnc
+      - xvnc4viewer
+      - curlftpfs
+      - sshfs

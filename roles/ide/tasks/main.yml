@@ -2,18 +2,21 @@
 - name: Download intellij
   become: no
   get_url:
-    url=https://download-cf.jetbrains.com/idea/ideaIC-2016.2.2.tar.gz
-    dest=~/expr/ideaIC-2016.2.2.tar.gz
+    url=https://download-cf.jetbrains.com/idea/ideaIU-2019.2.1.tar.gz
+    dest=/tmp/idea-2019.tar.gz
     validate_certs=no
 
 - name: Unzip the thing
   become: no
-  unarchive: src=~/expr/ideaIC-2016.2.2.tar.gz dest=~/expr remote_src=yes copy=no
+  unarchive:
+    src: /tmp/idea-2019.tar.gz
+    dest: /tmp
+    remote_src: yes
 
-- name: rename
+- name: move idea to expr
   become: no
-  command: mv ~/expr/idea-IC-162.1628.40 ~/expr/idea16
+  shell: mv /tmp/idea-IU-* ~/expr/idea-2019
 
 - name: Link idea
   become: no
-  file: src=~/expr/idea16/bin/idea.sh dest=~/bin/idea state=link force=yes
+  file: src=~/expr/idea-2019/bin/idea.sh dest=~/bin/idea state=link force=yes

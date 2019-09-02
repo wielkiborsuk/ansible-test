@@ -1,41 +1,45 @@
 ---
 - name: Install system tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - aptitude
-    - gdebi
-    - htop
+  apt:
+    state: latest
+    name:
+      - aptitude
+      - gdebi
+      - htop
 
 - name: Install build tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - build-essential
-    - automake
-    - autoconf
-    - bison
-    - cmake
-    - curl
+  apt:
+    state: latest
+    name:
+      - build-essential
+      - automake
+      - autoconf
+      - bison
+      - cmake
+      - curl
 
 #- name: Add git-lfs repo
   #shell: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 
 - name: Install admin tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - silversearcher-ag
-    - ccze
-    - git
-    - git-flow
-    - git-lfs
+  apt:
+    state: latest
+    name:
+      - silversearcher-ag
+      - ccze
+      - git
+      - git-flow
+      - git-lfs
 
 - name: Activate git-lfs extension
   become: no
   shell: git lfs install
 
 - name: Install ansible preconditions
-  apt: name={{ item }} state=latest
-  with_items:
-    - python-pycurl
+  apt:
+    state: latest
+    name:
+      - python-pycurl
 
 - name: Update apt
   apt: update_cache=yes upgrade=yes cache_valid_time=86400

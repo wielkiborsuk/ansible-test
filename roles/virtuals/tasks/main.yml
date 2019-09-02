@@ -1,15 +1,16 @@
---- 
+---
 - name: Update apt
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install virtual environments
-  apt: name={{ item }} state=latest
-  with_items:
-    - virtualbox
-    - docker.io
+  apt:
+    state: latest
+    name:
+      - virtualbox
+      - docker.io
 
 - name: download vagrant package
-  get_url: url=https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1_x86_64.deb dest=/tmp/vagrant.deb
+  get_url: url=https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.deb dest=/tmp/vagrant.deb
 
 - name: install vagrant
   command: gdebi --n /tmp/vagrant.deb

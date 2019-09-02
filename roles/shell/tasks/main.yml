@@ -3,21 +3,23 @@
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install common tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - zsh
-    - tmux
-    - screen
-    - caca-utils
-    - cowsay
-    - sc
-    - weechat
-    - wicd-curses
-    - figlet
-    - tidy
+  apt:
+    state: latest
+    name:
+      - zsh
+      - tmux
+      - screen
+      - cowsay
+      - sc
+      - weechat
+      - wicd-curses
+      - figlet
+      - tidy
 
 - name: install antibody for zsh
   shell: curl -sL git.io/antibody | sh -s
 
 - name: choose shell
-  user: name=borsuk shell=/usr/bin/zsh
+  user:
+    name: "{{ansible_user}}"
+    shell: /usr/bin/zsh

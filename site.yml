@@ -24,7 +24,7 @@
     - rxvt
     - video
     - web
-    #- ide
+    - ide
 
 #- name: restart machine
   #command: shutdown -r now "Ansible updates triggered"

@@ -1,27 +1,8 @@
 --- 
-- name: add oracle java8 repository
-  apt_repository: repo='ppa:webupd8team/java' state=present
-
-- name: Update apt
-  apt: update_cache=yes
-
-- name: Install debconf-utils - for java unattended install
-  apt: name={{ item }} state=latest
-  with_items:
-    - debconf-utils
-
-- name: accept oracle license
-  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-
 - name: Install java packages
-  apt: name={{ item }} state=latest force=yes
-  with_items:
-    - oracle-java8-installer
-
-- name: Install java packages
-  apt: name={{ item }} state=latest
-  with_items:
-    - oracle-java8-set-default
-    - maven
-    - postgresql
-    - pgadmin3
+  apt:
+    state: latest
+    name:
+      - openjdk-8-jdk
+      - openjdk-11-jdk
+      - maven

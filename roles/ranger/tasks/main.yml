@@ -3,15 +3,16 @@
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install common tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - atool
-    - highlight
-    - mediainfo
-    - rar
-    - unrar
-    - p7zip
-    - w3m
+  apt:
+    state: latest
+    name:
+      - atool
+      - highlight
+      - mediainfo
+      - rar
+      - unrar
+      - p7zip
+      - w3m
 
 - name: ensure that ~/expr exists
   become: no

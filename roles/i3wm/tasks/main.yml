@@ -1,6 +1,6 @@
 ---
 - name: add i3 repo keyring
-  command: /usr/lib/apt/apt-helper download-file http://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2018.01.30_all.deb keyring.deb SHA256:baa43dbbd7232ea2b5444cae238d53bebb9d34601cc000e82f11111b1889078a
+  command: /usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2019.02.01_all.deb keyring.deb SHA256:176af52de1a976f103f9809920d80d02411ac5e763f695327de9fa6aff23f416
 
 - name: add keyring package
   command: dpkg -i ./keyring.deb
@@ -12,12 +12,13 @@
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install common tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - i3
-    - conky
-    - dunst
-    - feh
-    - scrot
-    - suckless-tools
-    - xbacklight
+  apt:
+    state: latest
+    name:
+      - i3
+      - conky
+      - dunst
+      - feh
+      - scrot
+      - suckless-tools
+      - xbacklight

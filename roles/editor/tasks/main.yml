@@ -3,9 +3,10 @@
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install uber text editors
-  apt: name={{ item }} state=latest
-  with_items:
-    - vim-gtk
+  apt:
+    state: latest
+    name:
+      - vim
 
 - name: run vim vundle install
   become: no
