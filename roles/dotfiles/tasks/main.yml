@@ -8,6 +8,7 @@
   with_items:
     - { path: '~/.ssh' }
     - { path: '~/workspace' }
+    - { path: '~/workspace/tools' }
     - { path: '~/.fonts' }
     - { path: '~/bin' }
 
@@ -90,6 +91,21 @@
     - gmailcheck
     - pomodoro
     - cmus_resume
+
+- name: Grab player_control git repo - a multimedia player control script
+  become: no
+  git:
+    repo: "git@github.com:wielkiborsuk/player_control.git"
+    dest: "~/workspace/tools/player_control"
+    accept_hostkey: yes
+    update: yes
+
+- name: link player_control as command
+  become: no
+  file:
+    src: "~/workspace/tools/player_control/__main__.py"
+    dest: "~/bin/player_control"
+    state: link
 
       #append to the end of sudoers file
 #ALL ALL=(root) NOPASSWD: /sbin/poweroff
