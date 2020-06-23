@@ -16,15 +16,4 @@
       - xdotool
       - xpad
       - wget
-
-- name: prepare dir for screenkey
-  become: no
-  file: path='~/expr/screenkey' state=directory
-
-- name: Install screenkey
-  become: no
-  unarchive:
-    src: https://github.com/wavexx/screenkey/archive/screenkey-0.9.tar.gz
-    dest: ~/expr/screenkey
-    remote_src: yes
-
+      - screenkey

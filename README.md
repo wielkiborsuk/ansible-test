@@ -1,6 +1,7 @@
-= Ansible installation guide =
+# Ansible installation guide
 
-== Fist steps ==
+## Fist steps
+
 * install openssh-server to allow ssh connections
 * add your key to authorized on the guest:
     * first you might need to run: ssh-keygen -f "~/.ssh/known_hosts" -R 10.10.32.240
