@@ -1,9 +1,6 @@
 ---
-- name: Update apt
-  apt: update_cache=yes cache_valid_time=86400
-
 - name: Install common tools
-  apt:
+  package:
     state: latest
     name:
       - atool

@@ -1,6 +1,6 @@
 ---
 - name: Install system tools
-  apt:
+  package:
     state: latest
     name:
       - aptitude
@@ -8,7 +8,7 @@
       - htop
 
 - name: Install build tools
-  apt:
+  package:
     state: latest
     name:
       - build-essential
@@ -19,7 +19,7 @@
       - curl
 
 - name: Install admin tools
-  apt:
+  package:
     state: latest
     name:
       - silversearcher-ag
@@ -27,10 +27,7 @@
       - git
 
 - name: Install ansible preconditions
-  apt:
+  package:
     state: latest
     name:
       - python-pycurl
-
-- name: Update apt
-  apt: update_cache=yes upgrade=yes cache_valid_time=86400

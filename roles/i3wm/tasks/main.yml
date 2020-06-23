@@ -6,7 +6,7 @@
   command: dpkg -i ./keyring.deb
 
 - name: add i3 repository
-  apt_repository: repo='deb http://debian.sur5r.net/i3/ bionic universe' state=present
+  apt_repository: repo='deb http://debian.sur5r.net/i3/ focal universe' state=present
 
 - name: Update apt
   apt: update_cache=yes cache_valid_time=86400

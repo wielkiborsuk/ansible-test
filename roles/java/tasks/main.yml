@@ -1,6 +1,6 @@
 --- 
 - name: Install java packages
-  apt:
+  package:
     state: latest
     name:
       - openjdk-8-jdk

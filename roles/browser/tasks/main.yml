@@ -1,12 +1,12 @@
 ---
 - name: add partner repo
-  apt_repository: repo='deb http://archive.canonical.com/ubuntu bionic partner' state=present
+  apt_repository: repo='deb http://archive.canonical.com/ubuntu focal partner' state=present
 
 - name: Update apt
   apt: update_cache=yes cache_valid_time=86400
 
 - name: Install web browser starting pack
-  apt:
+  package:
     state: latest
     name:
       - chromium-browser

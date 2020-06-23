@@ -1,13 +1,9 @@
 ---
-- name: Update apt
-  apt: update_cache=yes cache_valid_time=86400
-
 - name: Install rxvt terminal emulator and used packages
-  apt:
+  package:
     state: latest
     name:
       - rxvt-unicode-256color
-      - xfonts-terminus
 
 - name: x-terminal set
   shell: update-alternatives --set x-terminal-emulator /usr/bin/urxvt

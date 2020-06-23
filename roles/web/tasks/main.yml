@@ -1,9 +1,6 @@
 ---
-- name: Update apt
-  apt: update_cache=yes
-
 - name: Install nodejs
-  apt:
+  package:
     state: latest
     name:
       - nodejs

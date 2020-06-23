@@ -1,20 +1,12 @@
 ---
-- name: Update apt
-  apt: update_cache=yes cache_valid_time=86400
-
 - name: Install uber text editors
-  apt:
+  package:
     state: latest
     name:
       - vim
 
-- name: run vim vundle install
+- name: run vim-plug install
   become: no
-  command: vim +'silent! BundleInstall' +qa
-
-- name: initialize coc plugin
-  become: no
-  command: ~/.local/bin/yarn install
-  args:
-    creates: ~/.vim/bundle/coc.nvim/node_modules
-    chdir: ~/.vim/bundle/coc.nvim
+  command: vim +'silent! PlugInstall' +qa
+  environment:
+    PATH: /home/{{ansible_user}}/.local/bin:/usr/bin:/usr/local/bin
