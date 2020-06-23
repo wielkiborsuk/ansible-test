@@ -2,21 +2,21 @@
 - name: Download intellij
   become: no
   get_url:
-    url=https://download-cf.jetbrains.com/idea/ideaIU-2019.2.1.tar.gz
-    dest=/tmp/idea-2019.tar.gz
+    url=https://download-cf.jetbrains.com/idea/ideaIU-2020.1.2.tar.gz
+    dest=/tmp/idea-2020.tar.gz
     validate_certs=no
 
 - name: Unzip the thing
   become: no
   unarchive:
-    src: /tmp/idea-2019.tar.gz
+    src: /tmp/idea-2020.tar.gz
     dest: /tmp
     remote_src: yes
 
 - name: move idea to expr
   become: no
-  shell: mv /tmp/idea-IU-* ~/expr/idea-2019
+  shell: mv /tmp/idea-IU-* ~/expr/idea-2020
 
 - name: Link idea
   become: no
-  file: src=~/expr/idea-2019/bin/idea.sh dest=~/bin/idea state=link force=yes
+  file: src=~/expr/idea-2020/bin/idea.sh dest=~/bin/idea state=link force=yes

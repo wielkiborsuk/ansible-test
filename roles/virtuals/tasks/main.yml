@@ -8,9 +8,3 @@
     name:
       - virtualbox
       - docker.io
-
-- name: download vagrant package
-  get_url: url=https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.deb dest=/tmp/vagrant.deb
-
-- name: install vagrant
-  command: gdebi --n /tmp/vagrant.deb

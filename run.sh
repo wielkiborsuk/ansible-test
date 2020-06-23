@@ -15,4 +15,4 @@ fi
 
 echo "logging into $HOST as $USER"
 sleep 1
-ansible-playbook -vvv -i "$HOST," -u $USER -k -K -e "ansible_ssh_user=$USER" site.yml
+ansible-playbook -i "$HOST," -u $USER -k -K -e "ansible_ssh_user=$USER" site.yml

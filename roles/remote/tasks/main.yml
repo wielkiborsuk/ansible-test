@@ -7,6 +7,4 @@
     state: latest
     name:
       - x11vnc
-      - xvnc4viewer
-      - curlftpfs
-      - sshfs
+      - xtightvncviewer

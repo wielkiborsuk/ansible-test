@@ -1,10 +1,4 @@
 ---
-- name: add new key to apt for nodejs
-  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-
-- name: add new nodejs repository
-  apt_repository: repo='deb https://deb.nodesource.com/node_12.x bionic main' state=present
-
 - name: Update apt
   apt: update_cache=yes
 
@@ -13,6 +7,7 @@
     state: latest
     name:
       - nodejs
+      - npm
 
 - name: configure npm to use local directory for global installs
   become: no

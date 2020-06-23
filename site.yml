@@ -1,15 +1,15 @@
 ---
 - name: One shot developer system setup
   hosts: all
-  remote_user: borsuk
   become: yes
-  become_method: sudo
+  become_method: su
   roles:
     - system
     - dotfiles
     - aria
     - shell
     - python
+    - web
     - editor
     - ranger
     - general-tools
@@ -21,7 +21,6 @@
     - music
     - rxvt
     - video
-    - web
     - ide
 
 #- name: restart machine

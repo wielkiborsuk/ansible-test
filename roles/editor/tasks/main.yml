@@ -12,9 +12,9 @@
   become: no
   command: vim +'silent! BundleInstall' +qa
 
-- name: compile YouCompleteMe plugin
+- name: initialize coc plugin
   become: no
-  command: ./install.py
+  command: ~/.local/bin/yarn install
   args:
-    chdir: ~/.vim/bundle/YouCompleteMe/
-    creates: ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so
+    creates: ~/.vim/bundle/coc.nvim/node_modules
+    chdir: ~/.vim/bundle/coc.nvim
