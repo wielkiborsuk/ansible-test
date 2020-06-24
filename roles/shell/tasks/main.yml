@@ -11,6 +11,8 @@
       - weechat
       - figlet
       - tidy
+      - at
+      - task-spooler
 
 - name: install antibody for zsh
   shell: curl -sL git.io/antibody | sh -s

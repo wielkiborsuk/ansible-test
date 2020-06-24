@@ -73,6 +73,12 @@
 - name: enable bitmap fonts
   file: path=/etc/fonts/conf.d/70-no-bitmaps.conf state=absent
 
+- name: allow poweroff and reboot with no sudo
+  template:
+    src: power-mgmt
+    dest: /etc/sudoers.d/power-mgmt
+    validate: /usr/sbin/visudo -cf %s
+
 - name: Grab smalls git repo - contains commands used by desktop setup
   become: no
   git:

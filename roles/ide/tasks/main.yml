@@ -15,8 +15,14 @@
 
 - name: move idea to expr
   become: no
-  shell: mv /tmp/idea-IU-* ~/expr/idea-2020
+  command:
+    cmd: mv /tmp/idea-IU-* ~/expr/idea-2020
+    creates: ~/expr/idea-2020
 
 - name: Link idea
   become: no
-  file: src=~/expr/idea-2020/bin/idea.sh dest=~/bin/idea state=link force=yes
+  file:
+    src: ~/expr/idea-2020/bin/idea.sh
+    dest: ~/bin/idea
+    state: link
+    force: yes

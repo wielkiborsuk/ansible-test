@@ -3,7 +3,6 @@
   package:
     state: latest
     name:
-      - aptitude
       - gdebi
       - htop
 
