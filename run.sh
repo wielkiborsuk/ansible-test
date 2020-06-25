@@ -14,5 +14,5 @@ if [ -z "$USER" ]; then
 fi
 
 echo "logging into $HOST as $USER"
-sleep 1
+#sleep 1
 ansible-playbook -i "$HOST," -u $USER -k -K -e "ansible_ssh_user=$USER" site.yml

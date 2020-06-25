@@ -1,16 +1,19 @@
 ---
-- name: Install system tools
+- name: import system specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Install debian system tools
+  when: ansible_facts['distribution'] == "Ubuntu"
   package:
     state: latest
     name:
       - gdebi
-      - htop
 
 - name: Install build tools
   package:
     state: latest
     name:
-      - build-essential
+      - "{{ package.devel }}"
       - automake
       - autoconf
       - bison
@@ -21,12 +24,17 @@
   package:
     state: latest
     name:
-      - silversearcher-ag
+      - "{{ package.searcher }}"
       - ccze
       - git
+      - htop
 
 - name: Install ansible preconditions
   package:
     state: latest
     name:
       - python-pycurl
+
+- name: run Arch specific tasks
+  when: ansible_facts['distribution'] == "Archlinux"
+  import: "{{ ansible_distribution }}.yml"

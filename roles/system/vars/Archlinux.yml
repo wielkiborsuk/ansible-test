@@ -1,0 +1,3 @@
+package:
+  devel: base-devel
+  searcher: the_silver_searcher

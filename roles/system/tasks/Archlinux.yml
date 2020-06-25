@@ -1,0 +1,15 @@
+- name: add yaourt repository for arch
+  blockinfile:
+    dest: /etc/pacman.conf
+    content: |
+      [archlinuxfr]
+      SigLevel = Never
+      Server = http://repo.archlinux.fr/x86_64
+
+- name: refresh repositories
+  command: pacman -Syy
+
+- name: install yaourt
+  package:
+    state: latest
+    name: yaourt
