@@ -1,15 +1,21 @@
-- name: add yaourt repository for arch
-  blockinfile:
-    dest: /etc/pacman.conf
-    content: |
-      [archlinuxfr]
-      SigLevel = Never
-      Server = http://repo.archlinux.fr/x86_64
+- name: enable sudo with no password for yaourt use
+  template:
+    src: easy-sudo
+    dest: /etc/sudoers.d/easy-sudo
+    validate: /usr/sbin/visudo -cf %s
 
-- name: refresh repositories
-  command: pacman -Syy
+- include_role:
+    name: archlinux_aur
+    apply:
+      become: false
+      vars:
+        archlinux_aur_pkgs:
+          - package-query
+          - yaourt
+          - task-spooler
+        archlinux_aur_user: borsuk
 
-- name: install yaourt
-  package:
-    state: latest
-    name: yaourt
+- name: disable nopasswd sudo
+  file:
+    path: /etc/sudoers.d/easy-sudo
+    state: absent

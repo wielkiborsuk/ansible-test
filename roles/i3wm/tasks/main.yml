@@ -3,10 +3,28 @@
   package:
     state: latest
     name:
-      - i3
       - conky
       - dunst
       - feh
       - scrot
+
+- name: Install common tools
+  when: ansible_facts['distribution'] == "Ubuntu"
+  package:
+    state: latest
+    name:
       - suckless-tools
       - xbacklight
+      - i3
+
+- name: Install common tools
+  when: ansible_facts['distribution'] == "Archlinux"
+  package:
+    state: latest
+    name:
+      - dmenu
+      - xorg-xbacklight
+      - i3-wm
+      - i3lock
+      - i3status
+      - i3blocks

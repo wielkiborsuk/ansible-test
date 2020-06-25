@@ -4,13 +4,25 @@
     state: latest
     name:
       - pass
-      - gnupg2
-      - gnupg-agent
       - redshift
       - udevil
-      - wakeonlan
       - wvdial
       - xdotool
       - xpad
       - wget
       - screenkey
+
+- name: Install common tools for Ubuntu
+  when: ansible_facts['distribution'] == "Ubuntu"
+  package:
+    state: latest
+    name:
+      - gnupg2
+      - gnupg-agent
+
+- name: Install common tools for Archlinux
+  when: ansible_facts['distribution'] == "Archlinux"
+  package:
+    state: latest
+    name:
+      - gnupg

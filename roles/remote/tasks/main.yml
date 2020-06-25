@@ -1,7 +1,15 @@
 ---
 - name: Install remote access tools
+  when: ansible_facts['distribution'] == "Ubuntu"
   package:
     state: latest
     name:
       - x11vnc
       - xtightvncviewer
+
+- name: Install remote access tools
+  when: ansible_facts['distribution'] == "Archlinux"
+  package:
+    state: latest
+    name:
+      - tigervnc

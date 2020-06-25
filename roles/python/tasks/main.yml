@@ -1,5 +1,6 @@
 ---
 - name: Install python packages
+  when: ansible_facts['distribution'] == "Ubuntu"
   package:
     state: latest
     name:
@@ -7,3 +8,12 @@
       - python3-pycurl
       - python3-crypto
       - python3-pip
+
+- name: Install python packages
+  when: ansible_facts['distribution'] == "Archlinux"
+  package:
+    state: latest
+    name:
+      - python-pycurl
+      - python-crypto
+      - python-pip

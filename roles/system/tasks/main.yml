@@ -37,4 +37,4 @@
 
 - name: run Arch specific tasks
   when: ansible_facts['distribution'] == "Archlinux"
-  import: "{{ ansible_distribution }}.yml"
+  include_tasks: "{{ ansible_distribution }}.yml"

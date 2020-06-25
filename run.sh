@@ -13,6 +13,12 @@ if [ -z "$USER" ]; then
   exit 1
 fi
 
+if [ -z "$3" ]; then
+  ASKPASS='-k -K'
+else
+  ASKPASS=''
+fi
+
 echo "logging into $HOST as $USER"
 #sleep 1
-ansible-playbook -i "$HOST," -u $USER -k -K -e "ansible_ssh_user=$USER" site.yml
+ansible-playbook -i "$HOST," -u $USER $ASKPASS -e "ansible_ssh_user=$USER" site.yml

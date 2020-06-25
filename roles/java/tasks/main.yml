@@ -1,8 +1,18 @@
---- 
+---
 - name: Install java packages
+  when: ansible_facts['distribution'] == "Ubuntu"
   package:
     state: latest
     name:
       - openjdk-8-jdk
       - openjdk-11-jdk
+      - maven
+
+- name: Install java packages
+  when: ansible_facts['distribution'] == "Archlinux"
+  package:
+    state: latest
+    name:
+      - jdk8-openjdk
+      - jdk11-openjdk
       - maven

@@ -112,8 +112,3 @@
     src: "~/workspace/tools/player_control/__main__.py"
     dest: "~/bin/player_control"
     state: link
-
-      #append to the end of sudoers file
-#ALL ALL=(root) NOPASSWD: /sbin/poweroff
-#ALL ALL=(root) NOPASSWD: /sbin/reboot
-
