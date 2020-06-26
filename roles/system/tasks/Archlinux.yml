@@ -19,3 +19,17 @@
   file:
     path: /etc/sudoers.d/easy-sudo
     state: absent
+
+- name: install tools possibly missing from raw archlinux
+  package:
+    state: latest
+    name:
+      - dhcpcd
+      - openssh
+
+- name: enable services
+  command:
+    cmd: systemctl enable {{ item }}
+  with_items:
+    - dhcpcd
+    - sshd

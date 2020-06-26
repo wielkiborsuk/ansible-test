@@ -15,7 +15,7 @@
 
 - name: move idea to expr
   become: no
-  command:
+  shell:
     cmd: mv /tmp/idea-IU-* ~/expr/idea-2020
     creates: ~/expr/idea-2020
 
