@@ -5,6 +5,12 @@
     name:
       - vim
 
+- name: prepare directory for coc plugin
+  become: no
+  file:
+    path: /home/{{ansible_user}}/.config/coc
+    state: directory
+
 - name: run vim-plug install
   become: no
   command: vim +'silent! PlugInstall' +qa
