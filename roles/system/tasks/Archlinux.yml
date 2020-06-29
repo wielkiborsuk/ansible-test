@@ -1,13 +1,11 @@
-- name: enable wheel group users to use sudo
-  template:
-    src: wheel-sudo
-    dest: /etc/sudoers.d/wheel-sudo
-    validate: /usr/sbin/visudo -cf %s
+- name: Refresh pacman repositories
+  pacman:
+    update_cache: yes
 
 - name: enable sudo with no password for yaourt use
   template:
     src: easy-sudo
-    dest: /etc/sudoers.d/easy-sudo
+    dest: /etc/sudoers.d/99-easy-sudo
     validate: /usr/sbin/visudo -cf %s
 
 - include_role:
@@ -23,7 +21,7 @@
 
 - name: disable nopasswd sudo
   file:
-    path: /etc/sudoers.d/easy-sudo
+    path: /etc/sudoers.d/99-easy-sudo
     state: absent
 
 - name: install tools possibly missing from raw archlinux
@@ -32,6 +30,10 @@
     name:
       - dhcpcd
       - openssh
+      - xorg-server
+      - lightdm
+      - lightdm-gtk-greeter
+      - pulseaudio
 
 - name: enable services
   command:
@@ -39,6 +41,7 @@
   with_items:
     - dhcpcd
     - sshd
+    - lightdm
 
 - name: create swapfile
   command:
@@ -53,12 +56,12 @@
 - name: prepare swap configuration
   command:
     cmd: mkswap /swapfile
-    creates: /swapfile
+  when: ansible_swaptotal_mb < 1
 
 - name: turn swap on for current session
   command:
     cmd: swapon /swapfile
-    creates: /swapfile
+  when: ansible_swaptotal_mb < 1
 
 - name: create fstab entry for swapfile
   lineinfile:
@@ -69,3 +72,10 @@
   template:
     src: 90-low-swappiness.conf
     dest: /etc/sysctl.d/90-low-swappiness.conf
+
+- name: enable wheel group users to use sudo
+  template:
+    src: wheel-sudo
+    dest: /etc/sudoers.d/11-wheel-sudo
+    validate: /usr/sbin/visudo -cf %s
+

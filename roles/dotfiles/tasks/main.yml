@@ -24,12 +24,32 @@
     - { path: '~/Templates' }
     - { path: '~/Videos' }
 
+- name: import variables
+  include_vars: vars/vault.yml
+  no_log: true
+
 - name: Add ssh config with your keys to access all repositories
   become: no
   copy: src={{item.src}} dest=~/.ssh/ mode=0600
   with_items:
     - { src: '~/.ssh/id_rsa.pub'}
     - { src: '~/.ssh/id_rsa'}
+
+- name: Create private key for ssh identity
+  copy:
+    content: "{{ user.ssh_key.private }}"
+    dest: "/home/{{ ansible_user }}/.ssh/id_rsa"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0600
+
+- name: Create public key for ssh identity
+  copy:
+    content: "{{ user.ssh_key.public }}"
+    dest: "/home/{{ ansible_user }}/.ssh/id_rsa.pub"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0600
 
 - name: Grab dotfiles git repo - this is a crucial step will be required by others
   become: no

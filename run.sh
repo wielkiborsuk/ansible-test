@@ -14,9 +14,9 @@ if [ -z "$USER" ]; then
 fi
 
 if [ -z "$3" ]; then
-  ASKPASS='-k -K'
+  ASKPASS='-k -K --ask-vault-pass'
 else
-  ASKPASS=''
+  ASKPASS='--vault-password-file=.vaultpass'
 fi
 
 echo "logging into $HOST as $USER"
