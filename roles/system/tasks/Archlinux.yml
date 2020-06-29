@@ -1,3 +1,9 @@
+- name: enable wheel group users to use sudo
+  template:
+    src: wheel-sudo
+    dest: /etc/sudoers.d/wheel-sudo
+    validate: /usr/sbin/visudo -cf %s
+
 - name: enable sudo with no password for yaourt use
   template:
     src: easy-sudo
@@ -35,7 +41,9 @@
     - sshd
 
 - name: create swapfile
-  command: dd if=/dev/zero of=/swapfile bs=1048576 count=2048
+  command:
+    cmd: dd if=/dev/zero of=/swapfile bs=1048576 count=2048
+    creates: /swapfile
 
 - name: set proper file access for swapfile
   file:
@@ -43,10 +51,14 @@
     mode: 0600
 
 - name: prepare swap configuration
-  command: mkswap /swapfile
+  command:
+    cmd: mkswap /swapfile
+    creates: /swapfile
 
 - name: turn swap on for current session
-  command: swapon /swapfile
+  command:
+    cmd: swapon /swapfile
+    creates: /swapfile
 
 - name: create fstab entry for swapfile
   lineinfile:
@@ -55,5 +67,5 @@
 
 - name: adjust swappiness to put less load on swap file
   template:
-    src: 90-low-sappiness.conf
+    src: 90-low-swappiness.conf
     dest: /etc/sysctl.d/90-low-swappiness.conf
