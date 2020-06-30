@@ -4,5 +4,6 @@
     state: latest
     name:
       - cmus
+      - pulseaudio
       - pavucontrol
       - blueman

@@ -60,17 +60,15 @@
     update: yes
     force: yes
 
-- name: remove .gitconfig to allow git stowing
+- name: remove default dotfiles to allow git stowing
   become: no
   file:
-    path: '~/.gitconfig'
+    path: "{{ item }}"
     state: absent
-
-- name: remove .Xdefaults to allow rxvt stowing
-  become: no
-  file:
-    path: '~/.Xdefaults'
-    state: absent
+  with_items:
+    - '~/.gitconfig'
+    - '~/.Xdefaults'
+    - '~/.profile'
 
 - name: link config files
   become: no
