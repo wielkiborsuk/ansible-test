@@ -31,6 +31,9 @@
       - dhcpcd
       - openssh
       - xorg-server
+      - xorg-mkfontscale
+      - xorg-fonts-misc
+      - xorg-xrdb
       - lightdm
       - lightdm-gtk-greeter
       - pulseaudio
