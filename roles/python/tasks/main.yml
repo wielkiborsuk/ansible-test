@@ -8,6 +8,7 @@
       - python3-pycurl
       - python3-crypto
       - python3-pip
+      - python-is-python3
 
 - name: Install python packages
   when: ansible_facts['distribution'] == "Archlinux"

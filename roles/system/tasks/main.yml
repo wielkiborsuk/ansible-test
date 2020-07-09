@@ -8,6 +8,7 @@
     state: latest
     name:
       - gdebi
+      - aptitude
 
 - name: Install build tools
   package:
