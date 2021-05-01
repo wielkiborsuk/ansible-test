@@ -1,0 +1,20 @@
+---
+- name: Install terminator terminal emulator and used packages
+  when: ansible_facts['distribution'] == "Ubuntu"
+  package:
+    state: latest
+    name:
+      - terminator
+
+- name: x-terminal set
+  when: ansible_facts['distribution'] == "Ubuntu"
+  shell: update-alternatives --set x-terminal-emulator /usr/bin/terminator
+
+
+- name: Install terminator terminal emulator and used packages
+  when: ansible_facts['distribution'] == "Archlinux"
+  package:
+    state: latest
+    name:
+      - terminator
+
