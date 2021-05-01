@@ -9,6 +9,7 @@
       - unrar
       - p7zip
       - w3m
+      - w3m-img
       - zathura
 
 - name: ensure that ~/expr exists

@@ -82,6 +82,7 @@
     - i3
     - ranger
     - rxvt
+    - terminator
     - vundle-vim
     - zsh
     - cmus
