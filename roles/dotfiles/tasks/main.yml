@@ -125,9 +125,22 @@
     accept_hostkey: yes
     update: yes
 
+- name: Install dev requirements for python env setup
+  package:
+    state: latest
+    name:
+      - libdbus-1-dev
+      - libglib2.0-dev
+
+- name: prepare python venv for player_control
+  become: no
+  shell: python3 -mvenv venv && venv/bin/pip install -r requirements.txt
+  args:
+    chdir: ~/workspace/tools/player_control
+
 - name: link player_control as command
   become: no
   file:
-    src: "~/workspace/tools/player_control/__main__.py"
+    src: "~/workspace/tools/player_control/player_control.sh
     dest: "~/bin/player_control"
     state: link
