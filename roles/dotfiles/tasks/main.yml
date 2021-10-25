@@ -141,6 +141,6 @@
 - name: link player_control as command
   become: no
   file:
-    src: "~/workspace/tools/player_control/player_control.sh
+    src: "~/workspace/tools/player_control/player_control.sh"
     dest: "~/bin/player_control"
     state: link
