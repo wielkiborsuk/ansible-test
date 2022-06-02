@@ -17,7 +17,7 @@
           - package-query
           - yaourt
           - task-spooler
-        archlinux_aur_user: borsuk
+        archlinux_aur_user: false
 
 - name: disable nopasswd sudo
   file:

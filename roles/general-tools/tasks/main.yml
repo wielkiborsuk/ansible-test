@@ -5,7 +5,6 @@
     name:
       - pass
       - redshift
-      - udevil
       - wvdial
       - xdotool
       - xpad
@@ -19,6 +18,7 @@
     name:
       - gnupg2
       - gnupg-agent
+      - udevil
 
 - name: Install common tools for Archlinux
   when: ansible_facts['distribution'] == "Archlinux"
@@ -26,3 +26,26 @@
     state: latest
     name:
       - gnupg
+      - intltool
+
+- name: enable sudo with no password for yaourt use
+  template:
+    src: easy-sudo
+    dest: /etc/sudoers.d/99-easy-sudo
+    validate: /usr/sbin/visudo -cf %s
+
+- include_role:
+    name: archlinux_aur
+    apply:
+      become: false
+      vars:
+        archlinux_aur_pkgs:
+          - udevil
+        archlinux_aur_user: false
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: disable nopasswd sudo
+  file:
+    path: /etc/sudoers.d/99-easy-sudo
+    state: absent
+

@@ -8,27 +8,27 @@
 - name: Download intellij
   become: no
   get_url:
-    url=https://download-cf.jetbrains.com/idea/ideaIU-2020.1.2.tar.gz
-    dest=~/expr/tmp/idea-2020.tar.gz
+    url=https://download-cdn.jetbrains.com/idea/ideaIU-2022.1.2.tar.gz
+    dest=~/expr/tmp/idea-2022.tar.gz
     validate_certs=no
 
 - name: Unzip the thing
   become: no
   unarchive:
-    src: ~/expr/tmp/idea-2020.tar.gz
+    src: ~/expr/tmp/idea-2022.tar.gz
     dest: ~/expr/tmp
     remote_src: yes
 
 - name: move idea to expr
   become: no
   shell:
-    cmd: mv ~/expr/tmp/idea-IU-* ~/expr/idea-2020
-    creates: ~/expr/idea-2020
+    cmd: mv ~/expr/tmp/idea-IU-* ~/expr/idea-2022
+    creates: ~/expr/idea-2022
 
 - name: Link idea
   become: no
   file:
-    src: ~/expr/idea-2020/bin/idea.sh
+    src: ~/expr/idea-2022/bin/idea.sh
     dest: ~/bin/idea
     state: link
     force: yes

@@ -126,6 +126,7 @@
     update: yes
 
 - name: Install dev requirements for python env setup
+  when: ansible_facts['distribution'] == "Ubuntu"
   package:
     state: latest
     name:

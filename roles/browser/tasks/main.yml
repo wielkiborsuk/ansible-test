@@ -1,35 +1,8 @@
 ---
-- name: add partner repo
-  when: ansible_facts['distribution'] == "Ubuntu"
-  apt_repository: repo='deb http://archive.canonical.com/ubuntu focal partner' state=present
-
-- name: Update apt
-  when: ansible_facts['distribution'] == "Ubuntu"
-  apt: update_cache=yes cache_valid_time=86400
-
-- name: Install web browser starting pack
-  when: ansible_facts['distribution'] == "Ubuntu"
-  package:
-    state: latest
-    name:
-      - chromium-browser
-      - chromium-codecs-ffmpeg-extra
-
-- name: Create chromium symlink for script usage
-  when: ansible_facts['distribution'] == "Ubuntu"
-  become: no
-  file: src=/usr/bin/chromium-browser dest=~/bin/chromium state=link force=yes
-
-- name: Install web browser starting pack
-  when: ansible_facts['distribution'] == "Archlinux"
-  package:
-    state: latest
-    name:
-      - chromium
-
 - name: Install web browser starting pack
   package:
     state: latest
     name:
       - dillo
       - links
+      - firefox

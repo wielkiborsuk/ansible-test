@@ -1,14 +1,5 @@
 ---
 - name: Install virtual environments
-  when: ansible_facts['distribution'] == "Ubuntu"
-  package:
-    state: latest
-    name:
-      - virtualbox
-      - docker.io
-
-- name: Install virtual environments
-  when: ansible_facts['distribution'] == "Archlinux"
   package:
     state: latest
     name:

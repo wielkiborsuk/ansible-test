@@ -18,4 +18,5 @@
     - forever
     - git-run
     - yarn
-    - firebase-tools
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"

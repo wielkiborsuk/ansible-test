@@ -5,10 +5,10 @@
   become_method: su
   roles:
     - system
+    - python
     - dotfiles
     - aria
     - shell
-    - python
     - web
     - editor
     - ranger
@@ -19,7 +19,6 @@
     - virtuals
     - remote
     - music
-    - rxvt
     - terminator
     - video
     - ide

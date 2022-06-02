@@ -9,8 +9,22 @@
       - unrar
       - p7zip
       - w3m
-      - w3m-img
       - zathura
+
+
+- name: Install w3m image support
+  when: ansible_facts['distribution'] == "Ubuntu"
+  package:
+    state: latest
+    name:
+      - w3m-img
+
+- name: Install w3m image support
+  when: ansible_facts['distribution'] == "Archlinux"
+  package:
+    state: latest
+    name:
+      - imlib2
 
 - name: ensure that ~/expr exists
   become: no
@@ -19,7 +33,7 @@
 - name: clone ranger repo
   become: no
   git:
-    repo: 'git://git.savannah.nongnu.org/ranger.git'
+    repo: 'https://github.com/ranger/ranger.git'
     dest: '~/expr/ranger'
     accept_hostkey: yes
     update: yes
