@@ -37,6 +37,7 @@
       - lightdm
       - lightdm-gtk-greeter
       - pulseaudio
+      - networkmanager
 
 - name: enable services
   command:
@@ -45,6 +46,7 @@
     - dhcpcd
     - sshd
     - lightdm
+    - NetworkManager
 
 - name: create swapfile
   command:
@@ -82,3 +84,6 @@
     dest: /etc/sudoers.d/11-wheel-sudo
     validate: /usr/sbin/visudo -cf %s
 
+- name: Configure keyboard layout to 'pl'
+  become: yes
+  command: localectl set-x11-keymap pl

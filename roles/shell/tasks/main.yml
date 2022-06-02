@@ -39,3 +39,10 @@
     dest: '~/expr/fzf'
     accept_hostkey: yes
     update: yes
+
+- name: install fzf binary
+  become: no
+  command:
+    cmd: ./install --bin
+    chdir: '~/expr/fzf'
+    creates: '~/expr/fzf/bin/fzf'
