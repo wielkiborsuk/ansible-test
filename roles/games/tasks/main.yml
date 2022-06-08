@@ -1,0 +1,7 @@
+---
+- name: Install game applications
+  package:
+    state: latest
+    name:
+      - higan
+      - steam

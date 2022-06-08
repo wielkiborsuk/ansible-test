@@ -10,6 +10,8 @@
       - p7zip
       - w3m
       - zathura
+      - zip
+      - unzip
 
 
 - name: Install w3m image support

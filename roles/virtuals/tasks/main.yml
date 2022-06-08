@@ -5,3 +5,4 @@
     name:
       - virtualbox
       - docker
+      - docker-compose

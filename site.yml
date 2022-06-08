@@ -22,6 +22,8 @@
     - terminator
     - video
     - ide
+    - devops
+    - games
 
 #- name: restart machine
   #command: shutdown -r now "Ansible updates triggered"

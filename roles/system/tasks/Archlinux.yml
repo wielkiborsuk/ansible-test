@@ -1,3 +1,10 @@
+- name: Enable multilib repository
+  blockinfile:
+    path: /etc/pacman.conf
+    block: |
+      [multilib]
+      Include = /etc/pacman.d/mirrorlist
+
 - name: Refresh pacman repositories
   pacman:
     update_cache: yes
