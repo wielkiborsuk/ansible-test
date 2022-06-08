@@ -1,0 +1,96 @@
+- name: Enable multilib repository
+  blockinfile:
+    path: /etc/pacman.conf
+    block: |
+      [multilib]
+      Include = /etc/pacman.d/mirrorlist
+
+- name: Refresh pacman repositories
+  pacman:
+    update_cache: yes
+
+- name: enable sudo with no password for yaourt use
+  template:
+    src: easy-sudo
+    dest: /etc/sudoers.d/99-easy-sudo
+    validate: /usr/sbin/visudo -cf %s
+
+- include_role:
+    name: archlinux_aur
+    apply:
+      become: false
+      vars:
+        archlinux_aur_pkgs:
+          - package-query
+          - yaourt
+          - task-spooler
+        archlinux_aur_user: false
+
+- name: disable nopasswd sudo
+  file:
+    path: /etc/sudoers.d/99-easy-sudo
+    state: absent
+
+- name: install tools possibly missing from raw archlinux
+  package:
+    state: latest
+    name:
+      - dhcpcd
+      - openssh
+      - xorg-server
+      - xorg-mkfontscale
+      - xorg-fonts-misc
+      - xorg-xrdb
+      - lightdm
+      - lightdm-gtk-greeter
+      - pulseaudio
+      - networkmanager
+
+- name: enable services
+  command:
+    cmd: systemctl enable {{ item }}
+  with_items:
+    - dhcpcd
+    - sshd
+    - lightdm
+    - NetworkManager
+
+- name: create swapfile
+  command:
+    cmd: dd if=/dev/zero of=/swapfile bs=1048576 count=2048
+    creates: /swapfile
+
+- name: set proper file access for swapfile
+  file:
+    path: /swapfile
+    mode: 0600
+
+- name: prepare swap configuration
+  command:
+    cmd: mkswap /swapfile
+  when: ansible_swaptotal_mb < 1
+
+- name: turn swap on for current session
+  command:
+    cmd: swapon /swapfile
+  when: ansible_swaptotal_mb < 1
+
+- name: create fstab entry for swapfile
+  lineinfile:
+    path: /etc/fstab
+    line: /swapfile    none    swap    sw    0    0
+
+- name: adjust swappiness to put less load on swap file
+  template:
+    src: 90-low-swappiness.conf
+    dest: /etc/sysctl.d/90-low-swappiness.conf
+
+- name: enable wheel group users to use sudo
+  template:
+    src: wheel-sudo
+    dest: /etc/sudoers.d/11-wheel-sudo
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Configure keyboard layout to 'pl'
+  become: yes
+  command: localectl set-x11-keymap pl

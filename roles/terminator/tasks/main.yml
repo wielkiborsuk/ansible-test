@@ -1,20 +1,20 @@
 ---
-- name: Install rxvt terminal emulator and used packages
+- name: Install terminator terminal emulator and used packages
   when: ansible_facts['distribution'] == "Ubuntu"
   package:
     state: latest
     name:
-      - rxvt-unicode-256color
+      - terminator
 
 - name: x-terminal set
   when: ansible_facts['distribution'] == "Ubuntu"
-  shell: update-alternatives --set x-terminal-emulator /usr/bin/urxvt
+  shell: update-alternatives --set x-terminal-emulator /usr/bin/terminator
 
 
-- name: Install rxvt terminal emulator and used packages
+- name: Install terminator terminal emulator and used packages
   when: ansible_facts['distribution'] == "Archlinux"
   package:
     state: latest
     name:
-      - rxvt-unicode
+      - terminator
 

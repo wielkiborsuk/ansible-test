@@ -1,20 +1,48 @@
 ---
-- name: Update apt
-  apt: update_cache=yes cache_valid_time=86400
+- name: Install common tools
+  package:
+    state: latest
+    name:
+      - zsh
+      - tmux
+      - screen
+      - cowsay
+      - sc
+      - weechat
+      - figlet
+      - tidy
+      - at
 
 - name: Install common tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - zsh
-    - tmux
-    - screen
-    - caca-utils
-    - cowsay
-    - sc
-    - weechat
-    - wicd-curses
-    - figlet
-    - tidy
+  when: ansible_facts['distribution'] == "Ubuntu"
+  package:
+    state: latest
+    name:
+      - task-spooler
+
+- name: install antibody for zsh
+  shell: curl -sL git.io/antibody | sh -s
 
 - name: choose shell
-  user: name=borsuk shell=/usr/bin/zsh
+  user:
+    name: "{{ansible_user}}"
+    shell: /usr/bin/zsh
+
+- name: ensure that ~/expr exists
+  become: no
+  file: path=~/expr state=directory
+
+- name: clone fzf repo
+  become: no
+  git:
+    repo: 'https://github.com/junegunn/fzf.git'
+    dest: '~/expr/fzf'
+    accept_hostkey: yes
+    update: yes
+
+- name: install fzf binary
+  become: no
+  command:
+    cmd: ./install --bin
+    chdir: '~/expr/fzf'
+    creates: '~/expr/fzf/bin/fzf'

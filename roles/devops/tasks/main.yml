@@ -1,0 +1,92 @@
+---
+- name: prepare expr/tmp directory
+  become: no
+  file:
+    path: ~/expr/tmp
+    state: directory
+
+- name: Download awscli
+  become: no
+  get_url:
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: ~/expr/tmp/awscli.zip
+    validate_certs: no
+
+- name: Unzip the thing
+  become: no
+  unarchive:
+    src: ~/expr/tmp/awscli.zip
+    dest: ~/expr/tmp
+    remote_src: yes
+
+- name: install awscli v2
+  shell:
+    cmd: /home/borsuk/expr/tmp/aws/install
+    creates: /usr/local/bin/aws
+
+- name: download k9s client
+  become: no
+  get_url:
+    url: https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz
+    dest: ~/expr/tmp/k9s.tar.gz
+    validate_certs: no
+
+- name: Unzip the thing
+  become: no
+  unarchive:
+    src: ~/expr/tmp/k9s.tar.gz
+    dest: ~/expr/tmp
+    remote_src: yes
+
+- name: rename binary
+  become: no
+  shell:
+    cmd: mv ~/expr/tmp/k9s ~/expr/k9s
+    creates: ~/expr/k9s
+
+- name: link for commanline usage
+  become: no
+  file:
+    src: ~/expr/k9s
+    dest: ~/bin/k9s
+    state: link
+
+- name: clean up expr/tmp directory
+  become: no
+  file:
+    path: ~/expr/tmp
+    state: absent
+
+- name: provide package repo for terraform and kubectl
+  when: ansible_facts['distribution'] == "Ubuntu"
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  with_items:
+    - https://apt.releases.hashicorp.com/gpg
+    - https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    - https://baltocdn.com/helm/signing.asc
+
+- name: provide package repo for terraform and kubectl
+  when: ansible_facts['distribution'] == "Ubuntu"
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    - deb https://apt.kubernetes.io/ kubernetes-xenial main
+    - deb https://apt.releases.hashicorp.com {{ ansible_distribution_release|lower }} main
+    - deb https://baltocdn.com/helm/stable/debian/ all main
+
+- name: Refresh apt repositories
+  when: ansible_facts['distribution'] == "Ubuntu"
+  apt:
+    update_cache: yes
+
+- name: install devops tools
+  package:
+    state: latest
+    name:
+      - terraform
+      - kubectl
+      - packer
+      - helm

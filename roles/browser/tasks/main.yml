@@ -1,19 +1,8 @@
 ---
-- name: add partner repo
-  apt_repository: repo='deb http://archive.canonical.com/ubuntu xenial partner' state=present
-
-- name: Update apt
-  apt: update_cache=yes cache_valid_time=86400
-
 - name: Install web browser starting pack
-  apt: name={{ item }} state=latest
-  with_items:
-    - chromium-browser
-    - chromium-codecs-ffmpeg-extra
-    - adobe-flashplugin
-    - dillo
-    - links
-
-- name: Create chromium symlink for script usage
-  become: no
-  file: src=/usr/bin/chromium-browser dest=~/bin/chromium state=link force=yes
+  package:
+    state: latest
+    name:
+      - dillo
+      - links
+      - firefox

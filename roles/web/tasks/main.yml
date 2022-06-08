@@ -1,24 +1,22 @@
---- 
-- name: add new key to apt for nodejs
-  apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-
-- name: add new nodejs repository
-  apt_repository: repo='deb https://deb.nodesource.com/setup_8.x artful main' state=present
-
-- name: Update apt
-  apt: update_cache=yes
-
+---
 - name: Install nodejs
-  apt: name={{ item }} state=latest
-  with_items:
-    - nodejs
+  package:
+    state: latest
+    name:
+      - nodejs
+      - npm
+
+- name: configure npm to use local directory for global installs
+  become: no
+  shell: npm config set prefix ~/.local
 
 - name: install npm tools common for development process
+  become: no
   npm: name={{ item }} global=yes
-  become: true
   with_items:
     - bower
-    - gulp
     - forever
-    - yo
     - git-run
+    - yarn
+  environment:
+    PATH: "/usr/local/bin:{{ ansible_env.PATH }}"

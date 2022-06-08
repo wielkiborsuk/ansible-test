@@ -1,46 +1,46 @@
 ---
-- name: Install system tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - aptitude
-    - gdebi
-    - htop
+- name: import system specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
 
-- name: add ansible repo
-  apt_repository: repo='ppa:ansible/ansible' state=present
+- name: Refresh pacman repositories
+  when: ansible_facts['distribution'] == "Archlinux"
+  pacman:
+    update_cache: yes
+
+- name: Refresh apt repositories
+  when: ansible_facts['distribution'] == "Ubuntu"
+  apt:
+    update_cache: yes
+
+- name: Install debian system tools
+  when: ansible_facts['distribution'] == "Ubuntu"
+  package:
+    state: latest
+    name:
+      - gdebi
+      - aptitude
+      - pkg-config
 
 - name: Install build tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - build-essential
-    - automake
-    - autoconf
-    - bison
-    - cmake
-    - ansible
-    - curl
-
-#- name: Add git-lfs repo
-  #shell: curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+  package:
+    state: latest
+    name:
+      - "{{ package.devel }}"
+      - automake
+      - autoconf
+      - bison
+      - cmake
+      - curl
 
 - name: Install admin tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - silversearcher-ag
-    - ccze
-    - git
-    - git-flow
-    - git-lfs
-    - hdup
+  package:
+    state: latest
+    name:
+      - "{{ package.searcher }}"
+      - ccze
+      - git
+      - htop
 
-- name: Activate git-lfs extension
-  become: no
-  shell: git lfs install
-
-- name: Install ansible preconditions
-  apt: name={{ item }} state=latest
-  with_items:
-    - python-pycurl
-
-- name: Update apt
-  apt: update_cache=yes upgrade=yes cache_valid_time=86400
+- name: run Arch specific tasks
+  when: ansible_facts['distribution'] == "Archlinux"
+  include_tasks: "{{ ansible_distribution }}.yml"

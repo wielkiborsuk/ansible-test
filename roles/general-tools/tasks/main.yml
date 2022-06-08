@@ -1,17 +1,51 @@
 ---
-- name: Update apt
-  apt: update_cache=yes cache_valid_time=86400
-
 - name: Install common tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - pass
-    - gnupg2
-    - gnupg-agent
-    - redshift
-    - udevil
-    - wakeonlan
-    - wvdial
-    - xdotool
-    - xpad
-    - wget
+  package:
+    state: latest
+    name:
+      - pass
+      - redshift
+      - wvdial
+      - xdotool
+      - xpad
+      - wget
+      - screenkey
+
+- name: Install common tools for Ubuntu
+  when: ansible_facts['distribution'] == "Ubuntu"
+  package:
+    state: latest
+    name:
+      - gnupg2
+      - gnupg-agent
+      - udevil
+
+- name: Install common tools for Archlinux
+  when: ansible_facts['distribution'] == "Archlinux"
+  package:
+    state: latest
+    name:
+      - gnupg
+      - intltool
+
+- name: enable sudo with no password for yaourt use
+  template:
+    src: easy-sudo
+    dest: /etc/sudoers.d/99-easy-sudo
+    validate: /usr/sbin/visudo -cf %s
+
+- include_role:
+    name: archlinux_aur
+    apply:
+      become: false
+      vars:
+        archlinux_aur_pkgs:
+          - udevil
+        archlinux_aur_user: false
+  when: ansible_facts['distribution'] == "Archlinux"
+
+- name: disable nopasswd sudo
+  file:
+    path: /etc/sudoers.d/99-easy-sudo
+    state: absent
+

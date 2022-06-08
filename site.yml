@@ -1,17 +1,15 @@
 ---
 - name: One shot developer system setup
   hosts: all
-  remote_user: borsuk
   become: yes
-  become_method: sudo
-  vars_files:
-    - variables.yml
+  become_method: su
   roles:
     - system
+    - python
     - dotfiles
     - aria
     - shell
-    - python
+    - web
     - editor
     - ranger
     - general-tools
@@ -21,10 +19,11 @@
     - virtuals
     - remote
     - music
-    - rxvt
+    - terminator
     - video
-    - web
-    #- ide
+    - ide
+    - devops
+    - games
 
 #- name: restart machine
   #command: shutdown -r now "Ansible updates triggered"

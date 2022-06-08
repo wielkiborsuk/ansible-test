@@ -1,19 +1,18 @@
 ---
-- name: Update apt
-  apt: update_cache=yes cache_valid_time=86400
-
 - name: Install uber text editors
-  apt: name={{ item }} state=latest
-  with_items:
-    - vim-gtk
+  package:
+    state: latest
+    name:
+      - vim
 
-- name: run vim vundle install
+- name: prepare directory for coc plugin
   become: no
-  command: vim +'silent! BundleInstall' +qa
+  file:
+    path: /home/{{ansible_user}}/.config/coc
+    state: directory
 
-- name: compile YouCompleteMe plugin
+- name: run vim-plug install
   become: no
-  command: ./install.py
-  args:
-    chdir: ~/.vim/bundle/YouCompleteMe/
-    creates: ~/.vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so
+  command: vim +'silent! PlugInstall' +qa
+  environment:
+    PATH: /home/{{ansible_user}}/.local/bin:/usr/bin:/usr/local/bin

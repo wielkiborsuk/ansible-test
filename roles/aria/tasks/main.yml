@@ -1,11 +1,9 @@
 ---
-- name: Update apt
-  apt: update_cache=yes cache_valid_time=86400
-
 - name: Install common tools
-  apt: name={{ item }} state=latest
-  with_items:
-    - aria2
+  package:
+    state: latest
+    name:
+      - aria2
 
 - name: Ensure expr directory in homedir
   become: no

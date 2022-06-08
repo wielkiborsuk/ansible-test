@@ -1,6 +1,6 @@
 ---
 - name: Install stow
-  apt: name=stow state=latest
+  package: name=stow state=latest
 
 - name: Ensure the .ssh, workspace, etc. directories exists
   become: no
@@ -8,8 +8,25 @@
   with_items:
     - { path: '~/.ssh' }
     - { path: '~/workspace' }
+    - { path: '~/workspace/tools' }
     - { path: '~/.fonts' }
     - { path: '~/bin' }
+
+- name: Ensure the default directories do not exist
+  become: no
+  file: path={{item.path}} state=absent
+  with_items:
+    - { path: '~/Desktop' }
+    - { path: '~/Documents' }
+    - { path: '~/Music' }
+    - { path: '~/Pictures' }
+    - { path: '~/Public' }
+    - { path: '~/Templates' }
+    - { path: '~/Videos' }
+
+- name: import variables
+  include_vars: vars/vault.yml
+  no_log: true
 
 - name: Add ssh config with your keys to access all repositories
   become: no
@@ -17,6 +34,22 @@
   with_items:
     - { src: '~/.ssh/id_rsa.pub'}
     - { src: '~/.ssh/id_rsa'}
+
+- name: Create private key for ssh identity
+  copy:
+    content: "{{ user.ssh_key.private }}"
+    dest: "/home/{{ ansible_user }}/.ssh/id_rsa"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0600
+
+- name: Create public key for ssh identity
+  copy:
+    content: "{{ user.ssh_key.public }}"
+    dest: "/home/{{ ansible_user }}/.ssh/id_rsa.pub"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0600
 
 - name: Grab dotfiles git repo - this is a crucial step will be required by others
   become: no
@@ -27,11 +60,15 @@
     update: yes
     force: yes
 
-- name: remove .gitconfig to allow rxvt stowing
-  file: path=/home/borsuk/.gitconfig state=absent
-
-- name: remove .Xdefaults to allow rxvt stowing
-  file: path=/home/borsuk/.Xdefaults state=absent
+- name: remove default dotfiles to allow git stowing
+  become: no
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - '~/.gitconfig'
+    - '~/.Xdefaults'
+    - '~/.profile'
 
 - name: link config files
   become: no
@@ -45,11 +82,21 @@
     - i3
     - ranger
     - rxvt
+    - terminator
     - vundle-vim
     - zsh
+    - cmus
+    - smalls
+    - weechat
 
 - name: enable bitmap fonts
   file: path=/etc/fonts/conf.d/70-no-bitmaps.conf state=absent
+
+- name: allow poweroff and reboot with no sudo
+  template:
+    src: power-mgmt
+    dest: /etc/sudoers.d/power-mgmt
+    validate: /usr/sbin/visudo -cf %s
 
 - name: Grab smalls git repo - contains commands used by desktop setup
   become: no
@@ -68,8 +115,33 @@
     - album_converter
     - gmailcheck
     - pomodoro
+    - cmus_resume
 
-      #append to the end of sudoers file
-#ALL ALL=(root) NOPASSWD: /sbin/poweroff
-#ALL ALL=(root) NOPASSWD: /sbin/reboot
+- name: Grab player_control git repo - a multimedia player control script
+  become: no
+  git:
+    repo: "git@github.com:wielkiborsuk/player_control.git"
+    dest: "~/workspace/tools/player_control"
+    accept_hostkey: yes
+    update: yes
 
+- name: Install dev requirements for python env setup
+  when: ansible_facts['distribution'] == "Ubuntu"
+  package:
+    state: latest
+    name:
+      - libdbus-1-dev
+      - libglib2.0-dev
+
+- name: prepare python venv for player_control
+  become: no
+  shell: python3 -mvenv venv && venv/bin/pip install -r requirements.txt
+  args:
+    chdir: ~/workspace/tools/player_control
+
+- name: link player_control as command
+  become: no
+  file:
+    src: "~/workspace/tools/player_control/player_control.sh"
+    dest: "~/bin/player_control"
+    state: link
