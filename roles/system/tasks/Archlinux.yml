@@ -44,7 +44,12 @@
       - lightdm
       - lightdm-gtk-greeter
       - pulseaudio
+      - pulseaudio-bluetooth
       - networkmanager
+      - cups
+      - simple-scan
+      - fuse2
+      - ntfs-3g
       - xsel
       - arc-gtk-theme
 
@@ -56,6 +61,8 @@
     - sshd
     - lightdm
     - NetworkManager
+    - bluetooth
+    - cups
 
 - name: create swapfile
   command:
