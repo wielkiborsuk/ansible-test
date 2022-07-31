@@ -45,6 +45,8 @@
       - lightdm-gtk-greeter
       - pulseaudio
       - networkmanager
+      - xsel
+      - arc-gtk-theme
 
 - name: enable services
   command:
@@ -94,3 +96,32 @@
 - name: Configure keyboard layout to 'pl'
   become: yes
   command: localectl set-x11-keymap pl
+
+- name: prepare image for lightdm-gtk-greeter
+  copy:
+    src: nightvale-right.jpg
+    dest: /usr/share/pixmaps/nightvale-right.jpg
+
+- name: prepare config for lightdm-gtk-greeter
+  copy:
+    src: lightdm-gtk-greeter.conf
+    dest: /etc/lightdm/lightdm-gtk-greeter.conf
+
+- name: provide grub theme
+  copy:
+    src: arch-silence
+    dest: /boot/grub/themes/
+
+- name: configure grub theme
+  lineinfile:
+    path: /etc/default/grub
+    line: GRUB_TIMEOUT=3
+    regexp: '^GRUB_TIMEOUT='
+
+- name: configure grub theme
+  lineinfile:
+    path: /etc/default/grub
+    line: GRUB_THEME="/boot/grub/themes/arch-silence/theme.txt"
+
+- name: recreate grub config
+  command: grub-mkconfig -o /boot/grub/grub.cfg

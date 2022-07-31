@@ -1,9 +1,12 @@
 ---
+- name: import system specific variables
+  include_vars: "{{ ansible_distribution }}.yml"
+
 - name: Install uber text editors
   package:
     state: latest
     name:
-      - vim
+      - "{{ package.vim }}"
 
 - name: prepare directory for coc plugin
   become: no
